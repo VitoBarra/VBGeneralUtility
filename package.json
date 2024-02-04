@@ -1,0 +1,28 @@
+{
+  "name": "com.vitobarra.generalutility",
+  "version": "0.0.1",
+  "displayName": "VBGeneralUtility",
+  "description": "General utility functions",
+  "unity": "2019.1",
+  "unityRelease": "0b5",
+  "dependencies": {},
+  "documentationUrl": "",
+  "changelogUrl": "",
+  "licensesUrl": "",
+  "keywords": [
+    "General"
+  ],
+  "bugs": {
+    "url": "https://github.com/VitoBarra/VBGeneralUtility/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://https://github.com/VitoBarra/VBGeneralUtility.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "VitoBarra",
+    "email": "vb.vitobarra@gmail.com",
+    "url": "https://github.com/VitoBarra"
+  }
+}
