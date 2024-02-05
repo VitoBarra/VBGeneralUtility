@@ -3,10 +3,17 @@ using System.Linq;
 
 namespace VitoBarra.GeneralUtility.DataStructure
 {
+    public enum LinkDirection
+    {
+        Outgoing,
+        Incoming
+    }
     public class GraphNode<T>
     {
-        public readonly IList<GraphNode<T>> ChildComponents = new List<GraphNode<T>>();
-        public int ChildCount => ChildComponents.Count;
+        public readonly IList<GraphNode<T>> Outgoing = new List<GraphNode<T>>();
+        public readonly IList<GraphNode<T>> Incoming = new List<GraphNode<T>>();
+        public int OutgoingCount => Outgoing.Count;
+        public int IncomingCount => Outgoing.Count;
 
         public T Value { get; set; }
 
@@ -15,62 +22,75 @@ namespace VitoBarra.GeneralUtility.DataStructure
             Value = value;
         }
 
-        public void AddChildren(IList<T> nodes)
+        public IList<GraphNode<T>> DirectionSelector(LinkDirection direction) => direction == LinkDirection.Outgoing ? Outgoing : Incoming;
+
+        public void AddLink(LinkDirection linkDirection,IList<T> nodes)
         {
             if (nodes == null) return;
 
             foreach (var node in nodes)
             {
                 if (node == null) continue;
-                ChildComponents.Add(new GraphNode<T>(node));
+                DirectionSelector(linkDirection).Add(new GraphNode<T>(node));
             }
         }
 
-        public void AddChildren(IList<GraphNode<T>> nodes)
+        public void AddLink(LinkDirection linkDirection,IList<GraphNode<T>> nodes)
         {
             if (nodes == null) return;
 
             foreach (var node in nodes)
             {
                 if (node == null) continue;
-                ChildComponents.Add(node);
+                DirectionSelector(linkDirection).Add(node);
             }
         }
 
-        public void AddChildren(T node)
+        public void AddLink(LinkDirection linkDirection,T node)
         {
             if (node == null) return;
 
-            ChildComponents.Add(new GraphNode<T>(node));
+            DirectionSelector(linkDirection).Add(new GraphNode<T>(node));
         }
 
 
-        public void AddChildren(GraphNode<T> node)
+        public void AddLink(LinkDirection linkDirection, GraphNode<T> node)
         {
             if (node == null) return;
 
-            ChildComponents.Add(node);
+            DirectionSelector(linkDirection).Add(node);
         }
 
-        public void RemoveChildren(T node)
+        public void RemoveLink(LinkDirection linkDirection, T node)
         {
             if (node == null) return;
 
-            ChildComponents.Remove(ChildComponents.First(x => x.Value.Equals(node)));
+            DirectionSelector(linkDirection).Remove(Outgoing.First(x => x.Value.Equals(node)));
         }
 
-        public void ClearChildren()
+        public void ClearLink(LinkDirection linkDirection)
         {
-            ChildComponents.Clear();
+            DirectionSelector(linkDirection).Clear();
+        }
+
+        public IList<GraphNode<T>> GetLink(LinkDirection linkDirection)
+        {
+            return DirectionSelector(linkDirection);
+        }
+
+        public void ClearAll()
+        {
+            Incoming.Clear();
+            Outgoing.Clear();
         }
 
         public IList<GraphNode<T>> GetTail()
         {
-            if (ChildComponents.Count == 0)
+            if (Outgoing.Count == 0)
                 return new List<GraphNode<T>>() { this };
 
             var tails = new List<GraphNode<T>>();
-            foreach (var child in ChildComponents)
+            foreach (var child in Outgoing)
             {
                 tails.AddRange(child.GetTail());
             }
