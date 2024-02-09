@@ -36,6 +36,23 @@ namespace VitoBarra.GeneralUtility.FeatureFullValue
     [Serializable]
     public class TraceableInt : TraceableValue<int>
     {
+        protected bool Equals(TraceableInt other)
+        {
+            return Value == other.Value;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((TraceableInt)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            throw new NotImplementedException();
+        }
 
         public TraceableInt(int value) : base(value){ }
 

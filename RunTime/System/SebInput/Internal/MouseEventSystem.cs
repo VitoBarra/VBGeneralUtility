@@ -132,7 +132,7 @@ namespace SebInput.Internal
                     }
                 }
 
-                listenersWithLeftMouseDown.Clear();
+                listenersWithLeftMouseDown?.Clear();
             }
 
             // Right mouse released
@@ -215,7 +215,7 @@ namespace SebInput.Internal
         static MouseEventSystem GetOrCreateInstance()
         {
             if (instance != null) return instance;
-            instance = FindObjectOfType<MouseEventSystem>();
+            instance = FindAnyObjectByType<MouseEventSystem>();
             if (instance == null)
             {
                 GameObject holder = new GameObject("Mouse Event System");

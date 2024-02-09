@@ -103,8 +103,8 @@ namespace VitoBarra.GeneralUtility.DataStructure
         public Func<GraphNode<T>, IList<GraphNode<T>>> SearchChild;
 
 
-        public void SetAndUpdateParent(GraphNode<T> node, bool notifyOld = true, bool notifyNew = true) =>
-            SetAndUpdateParent(SearchParent?.Invoke(node), notifyOld, notifyNew);
+        public void UpdateParent(bool notifyOld = true, bool notifyNew = true) =>
+            SetAndUpdateParent(SearchParent?.Invoke(this), notifyOld, notifyNew);
 
         public void SetAndUpdateParent(IList<GraphNode<T>> newParents, bool notifyOld = true, bool notifyNew = true)
         {
@@ -118,7 +118,7 @@ namespace VitoBarra.GeneralUtility.DataStructure
                 {
                     var oldParent = Parents[i];
                     Parents[i] = null;
-                    oldParent?.SetAndUpdateChildren(oldParent, false, true);
+                    oldParent?.UpdateChildren(false, true);
                 }
             }
 
@@ -127,15 +127,15 @@ namespace VitoBarra.GeneralUtility.DataStructure
 
             if (notifyNew)
                 foreach (var newParent in newParents)
-                    newParent?.SetAndUpdateChildren(newParent, true, false);
+                    newParent?.UpdateChildren(true, false);
 
 
             AddLink(LinkDirection.Parent, newParents.ToList());
         }
 
 
-        public void SetAndUpdateChildren(GraphNode<T> node, bool notifyOld = true, bool notifyNew = true) =>
-            SetAndUpdateChildren(SearchChild?.Invoke(node), notifyOld, notifyNew);
+        public void UpdateChildren(bool notifyOld = true, bool notifyNew = true) =>
+            SetAndUpdateChildren(SearchChild?.Invoke(this), notifyOld, notifyNew);
 
         public void SetAndUpdateChildren(IList<GraphNode<T>> newChildren, bool notifyOld = true, bool notifyNew = true)
         {
@@ -149,7 +149,7 @@ namespace VitoBarra.GeneralUtility.DataStructure
                 {
                     var oldChild = Children[i];
                     Children[i] = null;
-                    oldChild?.SetAndUpdateParent(oldChild, false, true);
+                    oldChild?.UpdateParent(false, true);
                 }
             }
 
@@ -159,7 +159,7 @@ namespace VitoBarra.GeneralUtility.DataStructure
 
             if (notifyNew)
                 foreach (var newChild in newChildren)
-                    newChild?.SetAndUpdateParent(newChild, true, false);
+                    newChild?.UpdateParent(true, false);
 
             AddLink(LinkDirection.Children, newChildren.ToList());
         }
@@ -168,12 +168,12 @@ namespace VitoBarra.GeneralUtility.DataStructure
         {
             var parents = new List<GraphNode<T>>(Parents);
             foreach (var parent in parents.Where(x => x != null))
-                parent.SetAndUpdateChildren(parent);
+                parent.UpdateChildren();
 
 
             var children = new List<GraphNode<T>>(Children);
             foreach (var child in children.Where(x => x != null))
-                child.SetAndUpdateParent(child);
+                child.UpdateParent();
         }
     }
 }
