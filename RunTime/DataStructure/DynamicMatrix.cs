@@ -26,6 +26,12 @@ namespace VitoBarra.GeneralUtility.DataStructure
             }
         }
 
+        public T this[int i, int j]
+        {
+            get => Get(i, j);
+            set => Set(value, i, j);
+        }
+
         public T Get(int i, int j)
         {
             if (!(IsValidCord(i, j)))
