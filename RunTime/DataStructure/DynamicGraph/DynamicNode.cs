@@ -34,7 +34,7 @@ namespace VitoBarra.GeneralUtility.DataStructure
             if (notifyOld)
             {
                 var list = new EdgeList<T>(Parents);
-                for (var i = 0; i < list.Count; i++)
+                for (var i = 0; i < list.Count && i < Parents.Count; i++)
                 {
                     var oldParent = Parents[i] as DynamicNode<T>;
                     Parents[i] = null;
@@ -65,7 +65,7 @@ namespace VitoBarra.GeneralUtility.DataStructure
             if (notifyOld)
             {
                 var list = new EdgeList<T>(Children);
-                for (int i = 0; i < list.Count; i++)
+                for (var i = 0; i < list.Count && i < Children.Count; i++)
                 {
                     var oldChild = Children[i] as DynamicNode<T>;
                     Children[i] = null;

@@ -4,8 +4,8 @@ namespace VitoBarra.GeneralUtility.DataStructure
 {
     public class Node<T>
     {
-        public EdgeList<T> Children { get; private set; } = new EdgeList<T>();
-        public EdgeList<T> Parents { get; private set; } = new EdgeList<T>();
+        public EdgeList<T> Children { get; protected set; } = new EdgeList<T>();
+        public EdgeList<T> Parents { get; protected set; } = new EdgeList<T>();
 
         public int ChildrenCount => Children.Count;
         public int ParentsCount => Parents.Count;
