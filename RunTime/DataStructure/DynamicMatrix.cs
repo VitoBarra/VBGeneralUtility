@@ -7,22 +7,22 @@ namespace VitoBarra.GeneralUtility.DataStructure
     {
         IList<IList<T>> Matrix;
 
-        int Width, Height;
+        int Column, Row;
 
         T DefaultValue;
 
-        public DynamicMatrix(int width, int height, T defaultValue = default)
+        public DynamicMatrix(int row, int column, T defaultValue = default)
         {
-            Width = width;
-            Height = height;
+            Column = column;
+            Row = row;
             DefaultValue = defaultValue;
             Matrix = new List<IList<T>>();
-            for (int i = 0; i < width; i++)
+            for (int i = 0; i < row; i++)
             {
-                var column = new List<T>();
-                for (int j = 0; j < height; j++)
-                    column.Add(defaultValue);
-                Matrix.Add(column);
+                var col = new List<T>();
+                for (int j = 0; j < column; j++)
+                    col.Add(defaultValue);
+                Matrix.Add(col);
             }
         }
 
@@ -47,48 +47,48 @@ namespace VitoBarra.GeneralUtility.DataStructure
         }
 
 
-        public bool IsValidCord(int i, int j)
+        public bool IsValidCord(int row, int col)
         {
-            return i >= 0 && i < Width && j >= 0 && j < Height;
+            return row >= 0 && row < Row && col >= 0 && col < Column;
         }
 
-        public void Resize(int newMaxWidth, int newMaxHeight)
+        public void Resize(int newMaxRow, int newMaxColumn)
         {
-            var widthDiff = newMaxWidth - Width;
-            var heightDiff = newMaxHeight - Height;
+            var colDiff = newMaxColumn - Column;
+            var rowDiff = newMaxRow - Row;
 
-            Width = newMaxWidth;
+            Row = newMaxRow;
 
-            switch (widthDiff)
+            switch (rowDiff)
             {
                 case > 0:
                 {
-                    for (int i = 0; i < widthDiff; i++)
+                    for (int i = 0; i < rowDiff; i++)
                     {
-                        var column = new List<T>();
-                        for (int j = 0; j < Height; j++)
-                            column.Add(DefaultValue);
-                        Matrix.Add(column);
+                        var row = new List<T>();
+                        for (int j = 0; j < Row; j++)
+                            row.Add(DefaultValue);
+                        Matrix.Add(row);
                     }
 
                     break;
                 }
                 case < 0:
                 {
-                    for (int i = 0; i < -widthDiff; i++)
+                    for (int i = 0; i < -rowDiff; i++)
                         Matrix.RemoveAt(Matrix.Count - 1);
                     break;
                 }
             }
 
-            Height = newMaxHeight;
+            Column = newMaxColumn;
 
-            switch (heightDiff)
+            switch (colDiff)
             {
                 case > 0:
                 {
                     foreach (var t in Matrix)
-                        for (int j = 0; j < heightDiff; j++)
+                        for (int j = 0; j < colDiff; j++)
                             t.Add(DefaultValue);
 
                     break;
@@ -96,7 +96,7 @@ namespace VitoBarra.GeneralUtility.DataStructure
                 case < 0:
                 {
                     foreach (var t in Matrix)
-                        for (int j = 0; j < -heightDiff; j++)
+                        for (int j = 0; j < -colDiff; j++)
                             t.RemoveAt(t.Count - 1);
 
                     break;
