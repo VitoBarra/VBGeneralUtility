@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace VitoBarra.System.Interaction
 {
-    public class InteractionManager : MonoBehaviour
+    public class InteractionSystem : MonoBehaviour
     {
-        public static InteractionManager Instance;
+        public static InteractionSystem Instance;
 
         private Interactable InteractableWhitFocus;
 

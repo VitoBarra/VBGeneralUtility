@@ -76,6 +76,8 @@ namespace SebInput.Internal
 
         void Update()
         {
+            if (cam == null) cam = Camera.main;
+            if (cam == null) return;
             if (Application.isEditor)
             {
                 vid_mouseSmoothPos = Vector2.SmoothDamp(vid_mouseSmoothPos, Mouse.current.position.ReadValue(),

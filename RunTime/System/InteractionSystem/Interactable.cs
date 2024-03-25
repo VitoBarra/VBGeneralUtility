@@ -17,11 +17,11 @@ namespace VitoBarra.System.Interaction
 
         public virtual bool CanReleaseFocus() => true;
 
-        public bool HasFocus => InteractionManager.Instance.HasFocus(this);
+        public bool HasFocus => InteractionSystem.Instance.HasFocus(this);
 
         public bool RequestFocus()
         {
-            var FocusObtained = InteractionManager.Instance.RequestFocus(this);
+            var FocusObtained = InteractionSystem.Instance.RequestFocus(this);
             if (FocusObtained)
                 OnFocusObtained?.Invoke();
             return FocusObtained;
@@ -33,7 +33,7 @@ namespace VitoBarra.System.Interaction
 
         private void ReleaseFocusNotHandled()
         {
-            InteractionManager.Instance.ReleaseFocus(this);
+            InteractionSystem.Instance.ReleaseFocus(this);
         }
 
         public void ReleaseFocus()

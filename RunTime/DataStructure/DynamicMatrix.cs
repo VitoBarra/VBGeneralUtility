@@ -46,6 +46,11 @@ namespace VitoBarra.GeneralUtility.DataStructure
             Matrix[i][j] = data;
         }
 
+        public void SetDefault(int i, int j)
+        {
+            Matrix[i][j] = DefaultValue;
+        }
+
 
         public bool IsValidCord(int row, int col)
         {
